@@ -1,25 +1,41 @@
 using UnityEngine;
-using UnityEngine.Events;
+
+[RequireComponent(typeof(AudioSource))]
 
 public class Alarm : MonoBehaviour
 {
-    [SerializeField] private AudioSource _alarmSource;
-    [SerializeField] private UnityEvent _someoneInvaded;
-    [SerializeField] private UnityEvent _everyoneLeft;
+    private AudioSource _audioSource;
+    private float _currentVolume;
+    private float _targetVolume;
+    private float _maximumVolume = 1.0f;
+    private float _minimumVolume = 0;
+    private float _deltaOfVolume = 1.0f;
+    private bool _isSoundUp = true;
 
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (other.TryGetComponent<Rogue>(out Rogue rogue))
-        {
-            _someoneInvaded?.Invoke();
-        }
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.volume = 0;
     }
 
-    private void OnTriggerExit(Collider other)
+    private void Update()
     {
-        if (other.TryGetComponent<Rogue>(out Rogue rogue))
+        _currentVolume = _audioSource.volume;
+
+        if (_isSoundUp == true)
         {
-            _everyoneLeft?.Invoke();
+            _targetVolume = _maximumVolume;
+        }
+        else
+        {
+            _targetVolume = _minimumVolume;
+        }
+
+        _audioSource.volume = Mathf.MoveTowards(_currentVolume, _targetVolume, _deltaOfVolume * Time.deltaTime);
+
+        if (_audioSource.volume == _targetVolume)
+        {
+            _isSoundUp = !_isSoundUp;
         }
     }
 }
