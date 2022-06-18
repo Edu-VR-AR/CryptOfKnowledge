@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &64629866 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8948297631719840192, guid: ae8741c4874b6074795308b8ae26b23f, type: 3}
+  m_PrefabInstance: {fileID: 142979848}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &142979848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -904,6 +909,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8948297631719840195, guid: ae8741c4874b6074795308b8ae26b23f, type: 3}
   m_PrefabInstance: {fileID: 142979848}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1156254777
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64629866}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 22, y: 22, z: 36.5}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1156254778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64629866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 044b2d45ca1d93e4bb1caa7f5f712c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alarmSource: {fileID: 0}
+  _someoneInvaded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1754077763}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  _everyoneLeft:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1754077763}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1385657359 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6619703690033431899, guid: 5dc1a87c918a8d54a8fca40b25bd1d70, type: 3}
@@ -980,9 +1041,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1754077762}
-  - component: {fileID: 1754077764}
   - component: {fileID: 1754077763}
-  - component: {fileID: 1754077765}
+  - component: {fileID: 1754077764}
   m_Layer: 0
   m_Name: Signalization - is anyone in House
   m_TagString: Untagged
@@ -1101,20 +1161,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!65 &1754077764
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1754077761}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1754077765
+--- !u!114 &1754077764
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1123,7 +1170,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1754077761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 044b2d45ca1d93e4bb1caa7f5f712c48, type: 3}
+  m_Script: {fileID: 11500000, guid: f203e5f28c5a18e44ad5d4c66a2708fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1905196642 stripped

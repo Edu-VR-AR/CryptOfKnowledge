@@ -1,6 +1,3 @@
 using UnityEngine;
 
-public class Rogue : MonoBehaviour
-{
-
-}
+public class Rogue : MonoBehaviour { }
