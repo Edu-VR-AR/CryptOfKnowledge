@@ -3,21 +3,32 @@ using UnityEngine.Events;
 
 public class RoomSignalization : MonoBehaviour
 {
-    [SerializeField] private GameObject _alarmSource;
     [SerializeField] private UnityEvent _someoneInvaded;
     [SerializeField] private UnityEvent _everyoneLeft;
 
-    private void OnTriggerEnter(Collider other)
+    private bool _isRogueBehindDoor = false;
+    private bool _isRogueGoInside = false;
+
+    public void DetectRogueBehind()
     {
-        if (other.TryGetComponent<Rogue>(out Rogue rogue))
+        _isRogueBehindDoor = !_isRogueBehindDoor;
+        ActivateSignalization();
+    }
+
+    public void DetectRogueInside()
+    {
+        _isRogueGoInside = !_isRogueGoInside;
+        ActivateSignalization();
+    }
+
+    private void ActivateSignalization()
+    {
+        if (_isRogueBehindDoor && _isRogueGoInside)
         {
             _someoneInvaded?.Invoke();
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent<Rogue>(out Rogue rogue))
+        if (_isRogueBehindDoor && _isRogueGoInside == false)
         {
             _everyoneLeft?.Invoke();
         }

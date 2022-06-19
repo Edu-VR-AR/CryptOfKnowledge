@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -11,6 +12,7 @@ public class Alarm : MonoBehaviour
     private float _minimumVolume = 0;
     private float _deltaOfVolume = 1.0f;
     private bool _isSoundUp = true;
+    private Coroutine _changeVolumeInWork;
 
     private void Start()
     {
@@ -18,24 +20,41 @@ public class Alarm : MonoBehaviour
         _audioSource.volume = 0;
     }
 
-    private void Update()
+    public void StartAlarm()
     {
-        _currentVolume = _audioSource.volume;
+        _changeVolumeInWork = StartCoroutine(ChangeVolume());    
+    }
 
-        if (_isSoundUp == true)
-        {
-            _targetVolume = _maximumVolume;
-        }
-        else
-        {
-            _targetVolume = _minimumVolume;
-        }
+    public void StopAlarm()
+    {
+        StopCoroutine(_changeVolumeInWork);
+    }
 
-        _audioSource.volume = Mathf.MoveTowards(_currentVolume, _targetVolume, _deltaOfVolume * Time.deltaTime);
+    private IEnumerator ChangeVolume()
+    {
+        bool isWork = true;
 
-        if (_audioSource.volume == _targetVolume)
+        while (isWork)
         {
-            _isSoundUp = !_isSoundUp;
+            _currentVolume = _audioSource.volume;
+
+            if (_isSoundUp == true)
+            {
+                _targetVolume = _maximumVolume;
+            }
+            else
+            {
+                _targetVolume = _minimumVolume;
+            }
+
+            _audioSource.volume = Mathf.MoveTowards(_currentVolume, _targetVolume, _deltaOfVolume * Time.deltaTime);
+
+            if (_audioSource.volume == _targetVolume)
+            {
+                _isSoundUp = !_isSoundUp;
+            }
+
+            yield return null;
         }
     }
 }
