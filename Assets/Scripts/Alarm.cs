@@ -11,7 +11,6 @@ public class Alarm : MonoBehaviour
     private float _maximumVolume = 1.0f;
     private float _minimumVolume = 0;
     private float _deltaOfVolume = 1.0f;
-    private bool _isSoundUp = true;
     private Coroutine _changeVolumeInWork;
 
     private void Start()
@@ -38,21 +37,16 @@ public class Alarm : MonoBehaviour
         {
             _currentVolume = _audioSource.volume;
 
-            if (_isSoundUp == true)
+            if (_currentVolume == _minimumVolume)
             {
                 _targetVolume = _maximumVolume;
             }
-            else
+            else if (_currentVolume == _maximumVolume)
             {
                 _targetVolume = _minimumVolume;
             }
 
             _audioSource.volume = Mathf.MoveTowards(_currentVolume, _targetVolume, _deltaOfVolume * Time.deltaTime);
-
-            if (_audioSource.volume == _targetVolume)
-            {
-                _isSoundUp = !_isSoundUp;
-            }
 
             yield return null;
         }
