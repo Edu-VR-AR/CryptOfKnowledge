@@ -1,31 +1,26 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-
 public class Alarm : MonoBehaviour
 {
-    private AudioSource _audioSource;
-    private float _currentVolume;
+    [SerializeField] private AudioSource _alarm;
+
+    private float _currentVolume = 0;
     private float _targetVolume;
     private float _maximumVolume = 1.0f;
     private float _minimumVolume = 0;
     private float _deltaOfVolume = 1.0f;
     private Coroutine _changeVolumeInWork;
 
-    private void Start()
+    public void OnAlarm()
     {
-        _audioSource = GetComponent<AudioSource>();
-        _audioSource.volume = 0;
+        _changeVolumeInWork = StartCoroutine(ChangeVolume());
+        _alarm.Play();
     }
 
-    public void StartAlarm()
+    public void OffAlarm()
     {
-        _changeVolumeInWork = StartCoroutine(ChangeVolume());    
-    }
-
-    public void StopAlarm()
-    {
+        _alarm.Stop();
         StopCoroutine(_changeVolumeInWork);
     }
 
@@ -35,7 +30,7 @@ public class Alarm : MonoBehaviour
 
         while (isWork)
         {
-            _currentVolume = _audioSource.volume;
+            _currentVolume = _alarm.volume;
 
             if (_currentVolume == _minimumVolume)
             {
@@ -46,7 +41,7 @@ public class Alarm : MonoBehaviour
                 _targetVolume = _minimumVolume;
             }
 
-            _audioSource.volume = Mathf.MoveTowards(_currentVolume, _targetVolume, _deltaOfVolume * Time.deltaTime);
+            _alarm.volume = Mathf.MoveTowards(_currentVolume, _targetVolume, _deltaOfVolume * Time.deltaTime);
 
             yield return null;
         }

@@ -1,48 +1,33 @@
 using UnityEngine;
-
-[RequireComponent(typeof(Animator))]
+using UnityEngine.Events;
 
 public class Door : MonoBehaviour
 {
-    private Animator _doorAnimation;
-    private string _nameBooleanState = "IsOpen";
-    private AnimationPart _animationPart;
 
-    private void Start()
-    {
-        _doorAnimation = GetComponent<Animator>();
-        _animationPart = new AnimationPart(_doorAnimation, _nameBooleanState);
-    }
+    [SerializeField] private UnityEvent _someoneInvaded;
+    [SerializeField] private UnityEvent _everyoneLeft;
+    [SerializeField] private UnityEvent _RogueInvade;
+    [SerializeField] private UnityEvent _RogueLeft;
 
     private void OnTriggerEnter(Collider other)
     {
-        _animationPart.OpenDoor();
+        if (other.TryGetComponent<Rogue>(out Rogue rogue))
+        {
+            _RogueInvade?.Invoke();
+        }
+
+        _someoneInvaded?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        _animationPart.CloseDoor();
-    }   
-}
+        if (other.TryGetComponent<Rogue>(out Rogue rogue))
+        {
+            _RogueLeft?.Invoke();
+        }
 
-public class AnimationPart
-{
-    private string _nameBooleanState;
-    private Animator _doorAnimation;
-
-    public AnimationPart(Animator doorAnimation, string nameBooleanState)
-    {
-        _nameBooleanState = nameBooleanState;
-        _doorAnimation = doorAnimation;
+        _everyoneLeft?.Invoke();
     }
 
-    public void OpenDoor()
-    {
-        _doorAnimation.SetBool(_nameBooleanState, true);
-    }
 
-    public void CloseDoor()
-    {
-        _doorAnimation.SetBool(_nameBooleanState, false);
-    }
 }
