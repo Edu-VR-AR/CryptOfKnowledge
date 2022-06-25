@@ -12,34 +12,30 @@ public class Alarm : MonoBehaviour
     private float _deltaOfVolume = 1.0f;
     private Coroutine _changeVolumeInWork;
 
+    private void Start()
+    {
+        _changeVolumeInWork = StartCoroutine(ChangeVolume(_minimumVolume));
+    }
+
     public void OnAlarm()
     {
-        _changeVolumeInWork = StartCoroutine(ChangeVolume());
-        _alarm.Play();
+        StopCoroutine(_changeVolumeInWork);
+        _changeVolumeInWork = StartCoroutine(ChangeVolume(_maximumVolume));
     }
 
     public void OffAlarm()
     {
-        _alarm.Stop();
         StopCoroutine(_changeVolumeInWork);
+        _changeVolumeInWork = StartCoroutine(ChangeVolume(_minimumVolume));
     }
 
-    private IEnumerator ChangeVolume()
+    private IEnumerator ChangeVolume(float _targetVolume)
     {
         bool isWork = true;
 
         while (isWork)
         {
             _currentVolume = _alarm.volume;
-
-            if (_currentVolume == _minimumVolume)
-            {
-                _targetVolume = _maximumVolume;
-            }
-            else if (_currentVolume == _maximumVolume)
-            {
-                _targetVolume = _minimumVolume;
-            }
 
             _alarm.volume = Mathf.MoveTowards(_currentVolume, _targetVolume, _deltaOfVolume * Time.deltaTime);
 

@@ -28,6 +28,4 @@ public class Door : MonoBehaviour
 
         _everyoneLeft?.Invoke();
     }
-
-
 }
