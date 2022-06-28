@@ -17,6 +17,18 @@ public class Alarm : MonoBehaviour
         _changeVolumeInWork = StartCoroutine(ChangeVolume(_minimumVolume));
     }
 
+    private void OnEnable()
+    {
+        Door._RogueInvaded += OnAlarm;
+        Door._RogueLeft += OffAlarm;
+    }
+
+    private void OnDisable()
+    {
+        Door._RogueInvaded -= OnAlarm;
+        Door._RogueLeft -= OffAlarm;
+    }
+
     public void OnAlarm()
     {
         StopCoroutine(_changeVolumeInWork);

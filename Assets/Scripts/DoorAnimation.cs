@@ -4,7 +4,7 @@ public class DoorAnimation : MonoBehaviour
 {
     [SerializeField] private Animator _doorAnimation;
 
-    private string _nameBooleanState = "IsOpen";
+    private readonly string _nameBooleanState = "IsOpen";
 
     public void OpenDoor()
     {

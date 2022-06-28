@@ -3,17 +3,17 @@ using UnityEngine.Events;
 
 public class Door : MonoBehaviour
 {
-
     [SerializeField] private UnityEvent _someoneInvaded;
     [SerializeField] private UnityEvent _everyoneLeft;
-    [SerializeField] private UnityEvent _RogueInvade;
-    [SerializeField] private UnityEvent _RogueLeft;
+
+    public static UnityAction _RogueInvaded;
+    public static UnityAction _RogueLeft;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Rogue>(out Rogue rogue))
         {
-            _RogueInvade?.Invoke();
+            _RogueInvaded?.Invoke();
         }
 
         _someoneInvaded?.Invoke();
