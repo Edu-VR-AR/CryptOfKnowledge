@@ -6,14 +6,14 @@ public class Door : MonoBehaviour
     [SerializeField] private UnityEvent _someoneInvaded;
     [SerializeField] private UnityEvent _everyoneLeft;
 
-    public static UnityAction _RogueInvaded;
-    public static UnityAction _RogueLeft;
+    public event UnityAction RogueInvaded;
+    public event UnityAction RogueLeft;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Rogue>(out Rogue rogue))
         {
-            _RogueInvaded?.Invoke();
+            RogueInvaded?.Invoke();
         }
 
         _someoneInvaded?.Invoke();
@@ -23,7 +23,7 @@ public class Door : MonoBehaviour
     {
         if (other.TryGetComponent<Rogue>(out Rogue rogue))
         {
-            _RogueLeft?.Invoke();
+            RogueLeft?.Invoke();
         }
 
         _everyoneLeft?.Invoke();

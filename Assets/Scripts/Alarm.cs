@@ -11,6 +11,7 @@ public class Alarm : MonoBehaviour
     private float _minimumVolume = 0;
     private float _deltaOfVolume = 1.0f;
     private Coroutine _changeVolumeInWork;
+    private Door _door;
 
     private void Start()
     {
@@ -19,14 +20,16 @@ public class Alarm : MonoBehaviour
 
     private void OnEnable()
     {
-        Door._RogueInvaded += OnAlarm;
-        Door._RogueLeft += OffAlarm;
+        _door = gameObject.GetComponent<Door>();
+
+        _door.RogueInvaded += OnAlarm;
+        _door.RogueLeft += OffAlarm;
     }
 
     private void OnDisable()
     {
-        Door._RogueInvaded -= OnAlarm;
-        Door._RogueLeft -= OffAlarm;
+        _door.RogueInvaded -= OnAlarm;
+        _door.RogueLeft -= OffAlarm;
     }
 
     public void OnAlarm()
