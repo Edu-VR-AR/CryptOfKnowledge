@@ -1,32 +1,29 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject Enemy;
+    [SerializeField] private Enemy _enemy;
     [SerializeField] private float _timeBetweenSpawn = 2.0f;
 
-    private SpawnPoint[] _spawnPoints;    
-    private float _timeAfterLastSpawn = 0;
+    private SpawnPoint[] _spawnPoints;
 
     private void Awake()
     {
         _spawnPoints = gameObject.GetComponentsInChildren<SpawnPoint>();
+        StartCoroutine(CreateNewEnemy());
     }
 
-    private void Update()
+    private IEnumerator CreateNewEnemy()
     {
-        _timeAfterLastSpawn += Time.deltaTime;
+        bool isInWork = true;
 
-        if (_timeAfterLastSpawn>_timeBetweenSpawn)
+        while (isInWork)
         {
-            _timeAfterLastSpawn = 0;
-            CreateNewEnemy();
-        }
-    }
+            Transform transform = _spawnPoints[Random.Range(0, _spawnPoints.Length)].GetComponent<Transform>();
+            GameObject newEnemy = Instantiate(_enemy.gameObject, transform.position, transform.rotation);
 
-    private void CreateNewEnemy()
-    {
-        Transform transform = _spawnPoints[Random.Range(0, _spawnPoints.Length)].GetComponent<Transform>();
-        GameObject newEnemy = Instantiate(Enemy, transform.position, transform.rotation);
+            yield return new WaitForSeconds(_timeBetweenSpawn);
+        }
     }
 }
